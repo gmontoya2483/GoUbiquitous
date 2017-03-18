@@ -52,17 +52,11 @@ Linking the Phone application with the Wear application
 
 1 - Creates a new wearable module: New -> Module.  
     Provide the new module the same package as the application.  
-    ```java
+```java
     package com.example.android.sunshine;
     ```
 
-```javascript
-    function fancyAlert(arg) {
-      if(arg) {
-        $.facebox({div:'#foo'})
-      }
-    }
-    ```
+
 
 2 - Add the dependency to the wear application within the phone app Gradle.
     
