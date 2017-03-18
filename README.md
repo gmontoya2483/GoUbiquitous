@@ -5,6 +5,7 @@
 * [Required Tasks check list](#required-tasks-check-list)
 * [Rubric check list](#rubric-check-list)
 * [Implementation](#implementation)
+    * [Using the Emulator](#using-the-emulator)
 * [Todo](#todo)
 
 
@@ -46,7 +47,7 @@ Through this project, I Will:
 ## Implementation
 
 
-### For using the Emulator
+### Using the Emulator
 
 *  Install the "Android wear" application in your phone.
 *  Turn on the Android wear emulator.
