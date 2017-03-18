@@ -46,8 +46,7 @@ Through this project, I Will:
 ## Implementation
 
 
-For using the Emulator
-----------------------
+### For using the Emulator
 
 *  Install the "Android wear" application in your phone.
 *  Turn on the Android wear emulator.
