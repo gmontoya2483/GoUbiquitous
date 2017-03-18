@@ -5,7 +5,7 @@
 * [Required Tasks check list](#required-tasks-check-list)
 * [Rubric check list](#rubric-check-list)
 * [Implementation](#implementation)
-    * [Using the Emulator](#using-the-emulator)
+* [Using the Emulator](#using-the-emulator)
 * [Todo](#todo)
 
 
@@ -47,7 +47,32 @@ Through this project, I Will:
 ## Implementation
 
 
-### Using the Emulator
+Linking the Phone application with the Wear application
+-------------------------------------------------------
+
+1 - Creates a new wearable module: New -> Module.
+    Provide the new module the same package as the application.
+
+    ````java
+    package com.example.android.sunshine;
+    ````
+
+2 - Add the dependency to the wear application within the phone app Gradle.
+    ````
+    dependencies {
+        wearApp project(':wear')
+
+    }````
+
+3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```
+    ````xml
+     <!-- Required to act as a custom watch face. -->
+         <uses-permission android:name="android.permission.WAKE_LOCK" />
+    ````
+
+
+
+## Using the Emulator
 
 *  Install the "Android wear" application in your phone.
 *  Turn on the Android wear emulator.
@@ -55,3 +80,5 @@ Through this project, I Will:
 *  While the connection is being established, run the following command in the terminal console:  ```adb -d forward tcp:5601 tcp:5601``` command
 
 In general the adb tool is located in ```C:\ Users\XXXXX\AppData\Local\Android\sdk\platform-tools\```
+
+
