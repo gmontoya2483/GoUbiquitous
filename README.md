@@ -54,17 +54,24 @@ Linking the Phone application with the Wear application
     Provide the new module the same package as the application.  
 ```java
     package com.example.android.sunshine;
-    ```
+```
 
 
 
 2 - Add the dependency to the wear application within the phone app Gradle.
+```dependencies {
+    compile "com.android.support:support-v4:25.0.1"
+    compile "com.android.support:support-v13:25.0.1"
+    compile "com.android.support:cardview-v7:25.0.1"
+    compile "com.android.support:appcompat-v7:25.0.1"
+    compile 'com.google.android.support:wearable:2.0.0'
+    compile 'com.google.android.gms:play-services-fitness:10.0.1'
+    compile 'com.google.android.gms:play-services-wearable:10.0.1'
+    compile 'com.android.support:support-v13:25.0.1'
+    wearApp project(':wear')
+}
+```
     
-    ````
-    dependencies {
-        wearApp project(':wear')
-    }
-    ````
     
 
 3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```  
