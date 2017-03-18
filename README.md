@@ -51,25 +51,32 @@ Linking the Phone application with the Wear application
 -------------------------------------------------------
 
 1 - Creates a new wearable module: New -> Module.  
-    Provide the new module the same package as the application.
-
+    Provide the new module the same package as the application.  
     ```java
-        package com.example.android.sunshine;
+    package com.example.android.sunshine;
     ```
 
+```javascript
+    function fancyAlert(arg) {
+      if(arg) {
+        $.facebox({div:'#foo'})
+      }
+    }
+    ```
 
 2 - Add the dependency to the wear application within the phone app Gradle.
     
-    ```dependencies {
+    ````
+    dependencies {
         wearApp project(':wear')
-
     }
-    ```
+    ````
     
 
-3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```
-    ```xml
-       <uses-permission android:name="android.permission.WAKE_LOCK" />```  
+3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```  
+    ````xml
+          <uses-permission android:name="android.permission.WAKE_LOCK" />
+    ```` 
     
 
 
