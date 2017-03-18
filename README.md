@@ -52,6 +52,7 @@ Linking the Phone application with the Wear application
 
 1 - Creates a new wearable module: New -> Module.  
     Provide the new module the same package as the application.  
+
 ```java
     package com.example.android.sunshine;
 ```
@@ -66,13 +67,10 @@ dependencies {
 }
 ```
     
-    
-
 3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```  
 
-```xml
-          <uses-permission android:name="android.permission.WAKE_LOCK" />``` 
- 
+```xml<uses-permission android:name="android.permission.WAKE_LOCK" />``` 
+
  
 ## Using the Emulator
 
