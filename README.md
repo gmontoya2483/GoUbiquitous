@@ -69,7 +69,9 @@ dependencies {
     
 3 - All the permissions needed by the wear application have to be provided to the phone Application as well in the ```Manifest.xml```  
 
-```xml<uses-permission android:name="android.permission.WAKE_LOCK" />``` 
+```xml
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+``` 
 
  
 ## Using the Emulator
