@@ -42,5 +42,6 @@ public class Utils {
 
     private  static String formatTwoDigitNumber(int hour) {
         return String.format("%02d", hour);
+
     }
 }
