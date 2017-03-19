@@ -80,6 +80,6 @@ dependencies {
 *  Connect the connect the phone with the emulator by using the Android wear application.
 *  While the connection is being established, run the following command in the terminal console:  ```adb -d forward tcp:5601 tcp:5601``` command
 
-In general the adb tool is located in ```C:\ Users\XXXXX\AppData\Local\Android\sdk\platform-tools\```
+In general the adb tool is located in ```C:\Users\XXXXX\AppData\Local\Android\sdk\platform-tools\```
 
 
