@@ -86,7 +86,7 @@ adb -d forward tcp:5601 tcp:5601
 
 In general the adb tool is located in:
 ```
-C:\ Users\XXXXX\AppData\Local\Android\sdk\platform-tools\
+C:\Users\XXXXX\AppData\Local\Android\sdk\platform-tools\
 ```
 
 

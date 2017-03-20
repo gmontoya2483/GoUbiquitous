@@ -94,8 +94,6 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
     private class Engine extends CanvasWatchFaceService.Engine {
         final Handler mUpdateTimeHandler = new EngineHandler(this);
 
-        static final String COLON_STRING = ":";
-
         Calendar mCalendar;
         Date mDate;
         SimpleDateFormat mDayOfWeekFormat;
@@ -113,12 +111,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         Paint mMinutePaint;
         Paint mAmPmPaint;
          */
-        Paint mDatePaint;
-
-
-
-
-        Paint mTextPaint;
+        Paint mDateTexPaint;
+        Paint mTimeTextPaint;
 
         float mXOffset;
         float mYOffset;
@@ -145,24 +139,17 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mBackgroundPaint = new Paint();
             mBackgroundPaint.setColor(resources.getColor(R.color.background));
 
-            //TODO Si hay tiempo codificar para separar horas y Minutos y hacer los 2 puntos titilar
-            /*
-            mHourPaint=new Paint();
-            mHourPaint=createTextPaint(resources.getColor(R.color.digital_text));
 
-            mMinutePaint=new Paint();
-            mMinutePaint=createTextPaint(resources.getColor(R.color.digital_text));
+            mTimeTextPaint = new Paint();
+            mTimeTextPaint.setColor(resources.getColor(R.color.digital_time));
+            mTimeTextPaint.setTypeface(NORMAL_TYPEFACE);
+            mTimeTextPaint.setAntiAlias(true);
 
-            mColonPaint=new Paint();
-            mColonPaint=createTextPaint(resources.getColor(R.color.digital_text));
-            */
-
-
-
-
-
-            mTextPaint = new Paint();
-            mTextPaint = createTextPaint(resources.getColor(R.color.digital_text));
+            mDateTexPaint = new Paint();
+            mDateTexPaint.setTextSize(R.dimen.digital_text_date_size);
+            mDateTexPaint.setColor(resources.getColor(R.color.digital_time));
+            mDateTexPaint.setTypeface(NORMAL_TYPEFACE);
+            mDateTexPaint.setAntiAlias(true);
 
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
             mCalendar = Calendar.getInstance();
@@ -251,7 +238,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             float textSize = resources.getDimension(isRound
                     ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
 
-            mTextPaint.setTextSize(textSize);
+            mTimeTextPaint.setTextSize(textSize);
+
         }
 
         @Override
@@ -273,7 +261,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             if (mAmbient != inAmbientMode) {
                 mAmbient = inAmbientMode;
                 if (mLowBitAmbient) {
-                    mTextPaint.setAntiAlias(!inAmbientMode);
+                    mTimeTextPaint.setAntiAlias(!inAmbientMode);
+                    mDateTexPaint.setAntiAlias(!inAmbientMode);
                 }
                 invalidate();
             }
@@ -309,7 +298,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
 
-            String timeString;
+            String time;
+            String date;
+
+            float xPos,yPos;
 
             // Draw the background.
             if (isInAmbientMode()) {
@@ -324,31 +316,22 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mDate.setTime(now);
             boolean is24Hour = DateFormat.is24HourFormat(DigitalWatchFaceService.this);
 
-            //Draw the hours
-            float x = mXOffset;
 
-
+            //Draw the Time
             if (mAmbient){
-                timeString=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
+                time=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
             }else{
-                timeString=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITH_SECONDS);
+                time=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
             }
 
-
-            canvas.drawText(timeString, x, mYOffset, mTextPaint);
-
-            //String text=String.format("%d:%02d",mCalendar.get(Calendar.HOUR),mCalendar.get(Calendar.MINUTE));
-            //canvas.drawText(text, mXOffset, mYOffset, mTextPaint);
+            xPos=Utils.centerX(bounds,mTimeTextPaint.measureText(time));
+            canvas.drawText(time, xPos, bounds.centerY(), mTimeTextPaint);
 
 
-            /*String text = mAmbient
-                    ? String.format("%d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE))
-                    : String.format("%d:%02d:%02d", mCalendar.get(Calendar.HOUR),
-                    mCalendar.get(Calendar.MINUTE), mCalendar.get(Calendar.SECOND));
-            canvas.drawText(text, mXOffset, mYOffset, mTextPaint);*/
+            //Draw the Date
+            date="FRI, JUL 24 2017";
+            canvas.drawText(date, bounds.centerX(),bounds.centerY()+ 10f, mDateTexPaint);
 
-            
         }
 
         /**

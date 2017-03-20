@@ -22,7 +22,8 @@
 
 
     <color name="background">@color/colorPrimary</color>
-    <color name="digital_text">@color/white</color>
+    <color name="digital_time">@color/white</color>
+    <color name="digital_date">@color/white</color>
 
 
 </resources>

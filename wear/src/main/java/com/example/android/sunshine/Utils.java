@@ -1,5 +1,7 @@
 package com.example.android.sunshine;
 
+import android.graphics.Rect;
+
 import java.util.Calendar;
 
 /**
@@ -44,4 +46,15 @@ public class Utils {
         return String.format("%02d", hour);
 
     }
+
+
+    //This helper method returns the X position to center a text on the X axis
+    public static float centerX (Rect bounds, float withOf){
+        float xStart;
+
+        xStart=bounds.centerX()- (withOf/2f);
+
+        return xStart;
+    }
+
 }
