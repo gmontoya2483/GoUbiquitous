@@ -111,8 +111,11 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         Paint mMinutePaint;
         Paint mAmPmPaint;
          */
-        Paint mDateTexPaint;
+        Paint mDateTextPaint;
         Paint mTimeTextPaint;
+        Paint mMaxTempTextPaint;
+        Paint mMinTempTextPaint;
+
 
         float mXOffset;
         float mYOffset;
@@ -145,11 +148,11 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mTimeTextPaint.setTypeface(NORMAL_TYPEFACE);
             mTimeTextPaint.setAntiAlias(true);
 
-            mDateTexPaint = new Paint();
-            mDateTexPaint.setTextSize(R.dimen.digital_text_date_size);
-            mDateTexPaint.setColor(resources.getColor(R.color.digital_time));
-            mDateTexPaint.setTypeface(NORMAL_TYPEFACE);
-            mDateTexPaint.setAntiAlias(true);
+            mDateTextPaint = new Paint();
+            mDateTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_date_size));
+            mDateTextPaint.setColor(resources.getColor(R.color.digital_date));
+            mDateTextPaint.setTypeface(NORMAL_TYPEFACE);
+            mDateTextPaint.setAntiAlias(true);
 
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
             mCalendar = Calendar.getInstance();
@@ -262,7 +265,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 mAmbient = inAmbientMode;
                 if (mLowBitAmbient) {
                     mTimeTextPaint.setAntiAlias(!inAmbientMode);
-                    mDateTexPaint.setAntiAlias(!inAmbientMode);
+                    mDateTextPaint.setAntiAlias(!inAmbientMode);
                 }
                 invalidate();
             }
@@ -300,6 +303,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
             String time;
             String date;
+            String maxTemp;
+            String minTemp;
 
             float xPos,yPos;
 
@@ -317,6 +322,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             boolean is24Hour = DateFormat.is24HourFormat(DigitalWatchFaceService.this);
 
 
+            //Draw the weather icon
+
+
+
             //Draw the Time
             if (mAmbient){
                 time=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
@@ -324,13 +333,30 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 time=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
             }
 
-            xPos=Utils.centerX(bounds,mTimeTextPaint.measureText(time));
-            canvas.drawText(time, xPos, bounds.centerY(), mTimeTextPaint);
+            canvas.drawText(time,
+                    Utils.centerX(bounds,mTimeTextPaint.measureText(time)),
+                    bounds.centerY(),
+                    mTimeTextPaint);
 
 
             //Draw the Date
             date="FRI, JUL 24 2017";
-            canvas.drawText(date, bounds.centerX(),bounds.centerY()+ 10f, mDateTexPaint);
+            canvas.drawText(date,
+                    Utils.centerX(bounds,mDateTextPaint.measureText(date)),
+                    bounds.centerY()+ 30f,
+                    mDateTextPaint);
+
+            //Draw a line
+            canvas.drawLine(bounds.centerX()-40f,
+                    bounds.centerY()+ 50f,
+                    bounds.centerX()+40f,
+                    bounds.centerY()+ 50f,
+                    mDateTextPaint);
+
+
+            //Draw the min and Max Temp
+
+
 
         }
 

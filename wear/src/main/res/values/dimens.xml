@@ -6,6 +6,6 @@
     <dimen name="digital_x_offset_round">25dp</dimen>
     <dimen name="digital_y_offset">90dp</dimen>
 
-    <dimen name="digital_text_date_size">25dp</dimen>
+    <dimen name="digital_text_date_size">15dp</dimen>
 
 </resources>
