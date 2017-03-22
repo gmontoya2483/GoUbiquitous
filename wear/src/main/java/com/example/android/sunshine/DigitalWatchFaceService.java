@@ -21,6 +21,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -113,6 +115,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
          */
         Paint mDateTextPaint;
         Paint mTimeTextPaint;
+        Paint mIconBitmappaint;
         Paint mMaxTempTextPaint;
         Paint mMinTempTextPaint;
 
@@ -153,6 +156,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mDateTextPaint.setColor(resources.getColor(R.color.digital_date));
             mDateTextPaint.setTypeface(NORMAL_TYPEFACE);
             mDateTextPaint.setAntiAlias(true);
+
+            mIconBitmappaint=new Paint();
+
+
 
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
             mCalendar = Calendar.getInstance();
@@ -323,6 +330,13 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
 
             //Draw the weather icon
+            if(!isInAmbientMode()) {
+                int icon = Utils.getIconResourceForWeatherCondition(300);
+                Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
+                canvas.drawBitmap(weatherIcon, 50,mYOffset-80f , mIconBitmappaint);
+            }
+
+
 
 
 
