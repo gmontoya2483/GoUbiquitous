@@ -332,8 +332,13 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             //Draw the weather icon
             if(!isInAmbientMode()) {
                 int icon = Utils.getIconResourceForWeatherCondition(300);
+
                 Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
-                canvas.drawBitmap(weatherIcon, 50,mYOffset-80f , mIconBitmappaint);
+                canvas.drawBitmap(weatherIcon,
+                        bounds.centerX()-(weatherIcon.getWidth()/2),
+                        mYOffset-80f,
+                        mIconBitmappaint);
+
             }
 
 
