@@ -1,5 +1,6 @@
 package com.example.android.sunshine;
 
+import android.content.Context;
 import android.graphics.Rect;
 
 import java.util.Calendar;
@@ -58,6 +59,131 @@ public class Utils {
     }
 
 
+    public static String formatTemperature(Context context, double temperature) {
+
+        int temperatureFormatResourceId = R.string.format_temperature;
+
+        /* For presentation, assume the user doesn't care about tenths of a degree. */
+        return String.format(context.getString(temperatureFormatResourceId), temperature);
+    }
+
+
+    public static String getStringWeekDay (Context context,int day){
+
+        String weekDay;
+
+        switch (day){
+            case 1:
+                weekDay=context.getString(R.string.Sunday);
+                break;
+            case 2:
+                weekDay=context.getString(R.string.Monday);
+                break;
+            case 3:
+                weekDay=context.getString(R.string.Tuesday);
+                break;
+            case 4:
+                weekDay=context.getString(R.string.Wednesday);
+                break;
+            case 5:
+                weekDay=context.getString(R.string.Thursday);
+                break;
+            case 6:
+                weekDay=context.getString(R.string.Friday);
+                break;
+            case 7:
+                weekDay=context.getString(R.string.Saturday);
+                break;
+            default:
+                weekDay="ERR";
+                break;
+
+        }
+
+        return weekDay;
+
+    }
+
+
+    public static String getStringMonth (Context context,int month){
+
+        String monthDesc;
+
+        switch (month){
+            case 0:
+                monthDesc=context.getString(R.string.January);
+                break;
+            case 1:
+                monthDesc=context.getString(R.string.February);
+                break;
+            case 2:
+                monthDesc=context.getString(R.string.March);
+                break;
+            case 3:
+                monthDesc=context.getString(R.string.April);
+                break;
+            case 4:
+                monthDesc=context.getString(R.string.May);
+                break;
+            case 5:
+                monthDesc=context.getString(R.string.June);
+                break;
+            case 6:
+                monthDesc=context.getString(R.string.July);
+                break;
+            case 7:
+                monthDesc=context.getString(R.string.August);
+                break;
+            case 8:
+                monthDesc=context.getString(R.string.September);
+                break;
+            case 9:
+                monthDesc=context.getString(R.string.October);
+                break;
+            case 10:
+                monthDesc=context.getString(R.string.November);
+                break;
+            case 11:
+                monthDesc=context.getString(R.string.December);
+                break;
+
+            default:
+                monthDesc="ERR";
+                break;
+
+        }
+
+        return monthDesc;
+
+    }
+
+
+    public static String getFormattedDate(Context context, Calendar calendar){
+        String date;
+        String weekDay=getStringWeekDay(context,calendar.get(Calendar.DAY_OF_WEEK));
+        String month=getStringMonth(context,calendar.get(Calendar.MONTH));
+        String day=String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+        String year=String.valueOf(calendar.get(Calendar.YEAR));
+
+        int DateFormatResourceId = R.string.format_date;
+
+        date= String.format(context.getString(DateFormatResourceId),weekDay,month,day,year);
+        return date;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      *
@@ -93,5 +219,9 @@ public class Utils {
         }
         return -1;
     }
+
+
+
+
 
 }

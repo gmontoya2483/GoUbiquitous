@@ -7,5 +7,9 @@
     <dimen name="digital_y_offset">90dp</dimen>
 
     <dimen name="digital_text_date_size">15dp</dimen>
+    <dimen name="digital_text_MaxT_size">20dp</dimen>
+    <dimen name="digital_text_MinT_size">15dp</dimen>
+
+
 
 </resources>

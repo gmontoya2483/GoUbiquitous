@@ -1,5 +1,55 @@
-<resources>
+
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
+
     <string name="app_name">SunshineWear</string>
     <string name="message">Watch face tapped</string>
     <string name="my_digital_name">Sunshine</string>
+
+
+
+    <!-- - - - - - - - - - - - - - - - -
+    - Used by Utils   -
+    - - - - - - - - - - - - - - - - -->
+
+    <!-- Temperature format -->
+    <string name="format_temperature">
+        <xliff:g id="temp">%1.0f</xliff:g>\u00B0
+    </string>
+
+    <!-- Days of the week -->
+    <string name="Sunday">SUN</string>
+    <string name="Monday">MON</string>
+    <string name="Tuesday">TUE</string>
+    <string name="Wednesday">WED</string>
+    <string name="Thursday">THU</string>
+    <string name="Friday">FRI</string>
+    <string name="Saturday">SAT</string>
+
+
+    <!-- Months -->
+    <string name="January">JAN</string>
+    <string name="February">FEB</string>
+    <string name="March">MAR</string>
+    <string name="April">APR</string>
+    <string name="May">MAY</string>
+    <string name="June">JUN</string>
+    <string name="July">JUL</string>
+    <string name="August">AUG</string>
+    <string name="September">SEP</string>
+    <string name="October">OCT</string>
+    <string name="November">NOV</string>
+    <string name="December">DEC</string>
+
+
+    <!-- Date Format -->
+    <string name="format_date">
+        <xliff:g id="week_day">%s</xliff:g>, <xliff:g id="month">%s</xliff:g> <xliff:g id="day">%s</xliff:g> <xliff:g id="year">%s</xliff:g>
+    </string>
+
+
+
+
+
+
+
 </resources>

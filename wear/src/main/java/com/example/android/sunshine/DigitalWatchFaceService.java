@@ -104,6 +104,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         //device features
         boolean mAmbient;
         boolean mRegisteredTimeZoneReceiver = false;
+        boolean mIsRound;
 
         //Graphic objects
         Paint mBackgroundPaint;
@@ -122,6 +123,12 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
         float mXOffset;
         float mYOffset;
+        float mYIconYOffset;
+        float mYTimeOffset;
+        float mYDateOffset;
+        float mYTempOffset;
+        float mYLineOffset;
+        float mXLineOffset;
 
         /**
          * Whether the display supports fewer bits for each color in ambient mode. When true, we
@@ -158,6 +165,20 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mDateTextPaint.setAntiAlias(true);
 
             mIconBitmappaint=new Paint();
+
+            mMaxTempTextPaint= new Paint();
+            mMaxTempTextPaint.setColor(resources.getColor(R.color.digital_maxT));
+            mMaxTempTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_MaxT_size));
+            mMaxTempTextPaint.setTypeface(NORMAL_TYPEFACE);
+            mMaxTempTextPaint.setAntiAlias(true);
+
+
+            mMinTempTextPaint= new Paint();
+            mMinTempTextPaint.setColor(resources.getColor(R.color.digital_minT));
+            mMinTempTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_MinT_size));
+            mMinTempTextPaint.setTypeface(NORMAL_TYPEFACE);
+            mMinTempTextPaint.setAntiAlias(true);
+
 
 
 
@@ -242,13 +263,35 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
             // Load resources that have alternate values for round watches.
             Resources resources = DigitalWatchFaceService.this.getResources();
-            boolean isRound = insets.isRound();
-            mXOffset = resources.getDimension(isRound
-                    ? R.dimen.digital_x_offset_round : R.dimen.digital_x_offset);
-            float textSize = resources.getDimension(isRound
-                    ? R.dimen.digital_text_size_round : R.dimen.digital_text_size);
+            mIsRound = insets.isRound();
 
-            mTimeTextPaint.setTextSize(textSize);
+            if (mIsRound){
+                mXOffset=R.dimen.digital_x_offset_round;
+                mTimeTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_size_round));
+
+                mYIconYOffset=-90f;
+                mYTimeOffset=0f;
+                mYDateOffset=30f;
+                mYTempOffset=110f;
+                mYLineOffset=50f;
+                mXLineOffset=40f;
+
+
+            }else{
+
+                mXOffset=R.dimen.digital_x_offset;
+                mTimeTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_size));
+
+                mYIconYOffset=-120f;
+                mYTimeOffset=0f;
+                mYDateOffset=30f;
+                mYTempOffset=90f;
+                mYLineOffset=50f;
+                mXLineOffset=40f;
+
+            }
+
+
 
         }
 
@@ -336,13 +379,10 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
                 canvas.drawBitmap(weatherIcon,
                         bounds.centerX()-(weatherIcon.getWidth()/2),
-                        mYOffset-80f,
+                        mYOffset+mYIconYOffset,
                         mIconBitmappaint);
 
             }
-
-
-
 
 
             //Draw the Time
@@ -354,26 +394,38 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
             canvas.drawText(time,
                     Utils.centerX(bounds,mTimeTextPaint.measureText(time)),
-                    bounds.centerY(),
+                    bounds.centerY()+mYTimeOffset,
                     mTimeTextPaint);
 
 
             //Draw the Date
-            date="FRI, JUL 24 2017";
+            date=Utils.getFormattedDate(getApplicationContext(),mCalendar);
             canvas.drawText(date,
                     Utils.centerX(bounds,mDateTextPaint.measureText(date)),
-                    bounds.centerY()+ 30f,
+                    bounds.centerY()+ mYDateOffset,
                     mDateTextPaint);
 
             //Draw a line
-            canvas.drawLine(bounds.centerX()-40f,
-                    bounds.centerY()+ 50f,
-                    bounds.centerX()+40f,
-                    bounds.centerY()+ 50f,
+            canvas.drawLine(bounds.centerX()-mXLineOffset,
+                    bounds.centerY()+ mYLineOffset,
+                    bounds.centerX()+mXLineOffset,
+                    bounds.centerY()+ mYLineOffset,
                     mDateTextPaint);
 
 
-            //Draw the min and Max Temp
+            //Draw the  Max Temp
+            maxTemp=Utils.formatTemperature(getApplicationContext(),27);
+            canvas.drawText(maxTemp,
+                    bounds.centerX()-(mMaxTempTextPaint.measureText(maxTemp)),
+                    bounds.centerY()+ mYTempOffset,
+                    mMaxTempTextPaint);
+
+            //Draw the  Max Temp
+            minTemp=Utils.formatTemperature(getApplicationContext(),15);
+            canvas.drawText(minTemp,
+                    bounds.centerX(),
+                    bounds.centerY()+ mYTempOffset,
+                    mMinTempTextPaint);
 
 
 
