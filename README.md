@@ -4,6 +4,7 @@
 * [What will I learn](#what-will-i-learn)
 * [Required Tasks check list](#required-tasks-check-list)
 * [Rubric check list](#rubric-check-list)
+* [Screenshots](#screenshots)
 * [Implementation](#implementation)
 * [Using the Emulator](#using-the-emulator)
 * [Todo](#todo)
@@ -42,6 +43,15 @@ Through this project, I Will:
 - [ ] App displays a graphic that summarizes the day’s weather (e.g., a sunny image, rainy image, cloudy image, etc.).
 - [ ] Watch face obtains weather data by talking with a copy of Sunshine running on a device paired to the watch.
 - [ ] App conforms to common standards found in the [Android Nanodegree General Project Guidelines](http://udacity.github.io/android-nanodegree-guidelines/core.html).
+
+
+## Screenshots
+
+<img src="screenshots/preview_phone.png" height="400" alt="Phone/>
+<img src="screenshots/preview_phone_detail.png" height="400" alt="Phone detail/>
+<img src="screenshots/preview_digital_circular.png" height="200" alt="Round Wearable"/> 
+<img src="screenshots/preview_digital.png" height="200" alt="Square Wearable"/>
+
 
 
 ## Implementation
