@@ -47,9 +47,9 @@ Through this project, I Will:
 
 ## Screenshots
 
-<img src="screenshots/preview_phone.png" height="400" alt="Phone/>
-<img src="screenshots/preview_phone_detail.png" height="400" alt="Phone detail/>
-<img src="screenshots/preview_digital_circular.png" height="200" alt="Round Wearable"/> 
+<img src="screenshots/preview_phone.png" height="400" alt="Phone"/>
+<img src="screenshots/preview_phone_detail.png" height="400" alt="Phone details"/>
+<img src="screenshots/preview_digital_circular.png" height="200" alt="Round Wearable"/>
 <img src="screenshots/preview_digital.png" height="200" alt="Square Wearable"/>
 
 
