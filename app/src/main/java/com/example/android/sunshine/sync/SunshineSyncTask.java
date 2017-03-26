@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.text.format.DateUtils;
 
+import com.example.android.sunshine.WatchInterface;
 import com.example.android.sunshine.data.SunshinePreferences;
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.utilities.NetworkUtils;
@@ -103,6 +104,18 @@ public class SunshineSyncTask {
                 if (notificationsEnabled && oneDayPassedSinceLastNotification) {
                     NotificationUtils.notifyUserOfNewWeather(context);
                 }
+
+
+            /*
+            *Notify the wearable the new weather conditions
+            * In order to avoid sending notifications to the wearable anytime the SyncTask runs it is verified if the weather conditions has changed.
+            */
+            WatchInterface watchInterface=new WatchInterface(context);
+
+                if (watchInterface.weatherHasChanged()){
+                    watchInterface.notifyWearable();
+                }
+
 
             /* If the code reaches this point, we have successfully performed our sync */
 

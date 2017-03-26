@@ -93,6 +93,12 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         }
     }
 
+
+    //TODO add the listener which consumes the notification sent by the phone
+    //implements DataApi.DataListener,  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
+    //https://github.com/aashishvanand/WearWeather/blob/master/wearable/src/main/java/com/example/android/sunshine/app/WeatherFace.java
+    //https://github.com/aashishvanand/WearWeather
+
     private class Engine extends CanvasWatchFaceService.Engine {
         final Handler mUpdateTimeHandler = new EngineHandler(this);
 
