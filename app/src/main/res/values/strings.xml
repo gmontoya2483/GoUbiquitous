@@ -244,4 +244,10 @@
         Low:<xliff:g id="low">%3$s</xliff:g>
     </string>
 
+
+
+    <!-- Used bz the WatchInterface class -->
+    <string name="err_sent_to_wearable">Not possible to send the information to the Wearable</string>
+    <string name="sent_to_wearable">Weather information was sent</string>
+
 </resources>

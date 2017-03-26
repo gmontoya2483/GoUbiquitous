@@ -78,15 +78,7 @@
         </service>
 
 
-        <!--
-        <receiver android:name=".WatchInterface"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-        </receiver>
-        -->
+
 
     </application>
 

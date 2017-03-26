@@ -37,12 +37,12 @@ Through this project, I Will:
 
 
 ## Rubric Check list
-- [ ] App works on both round and square face watches.
-- [ ] App displays the current time.
-- [ ] App displays the high and low temperatures.
-- [ ] App displays a graphic that summarizes the day’s weather (e.g., a sunny image, rainy image, cloudy image, etc.).
-- [ ] Watch face obtains weather data by talking with a copy of Sunshine running on a device paired to the watch.
-- [ ] App conforms to common standards found in the [Android Nanodegree General Project Guidelines](http://udacity.github.io/android-nanodegree-guidelines/core.html).
+- [x] App works on both round and square face watches.
+- [x] App displays the current time.
+- [x] App displays the high and low temperatures.
+- [x] App displays a graphic that summarizes the day’s weather (e.g., a sunny image, rainy image, cloudy image, etc.).
+- [x] Watch face obtains weather data by talking with a copy of Sunshine running on a device paired to the watch.
+- [x] App conforms to common standards found in the [Android Nanodegree General Project Guidelines](http://udacity.github.io/android-nanodegree-guidelines/core.html).
 
 
 ## Screenshots

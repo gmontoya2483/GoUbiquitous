@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
+import android.util.Log;
 
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.utilities.SunshineDateUtils;
@@ -30,7 +31,7 @@ import com.google.android.gms.wearable.Wearable;
 
 public class WatchInterface implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
 
-
+    private static final String LOG_TAG=WatchInterface.class.getSimpleName();
 
     public static final String NOTIFICATION_PATH="/wear_face";
     public static final String HIGH_TEMP_KEY="high_temp";
@@ -100,10 +101,12 @@ public class WatchInterface implements GoogleApiClient.ConnectionCallbacks,Googl
                     public void onResult(@NonNull DataApi.DataItemResult dataItemResult) {
                         if(!dataItemResult.getStatus().isSuccess()){
                             //Fail to send
+                            Log.e(LOG_TAG,mContext.getString(R.string.err_sent_to_wearable));
                             result[0] =false;
 
                         }else{
                             //Sent
+                            Log.i(LOG_TAG,mContext.getString(R.string.sent_to_wearable));
                             result[0] =true;
 
                         }

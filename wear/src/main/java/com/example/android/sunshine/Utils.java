@@ -18,6 +18,10 @@ public class Utils {
     public static final int TIME_WITH_SECONDS=1;
 
 
+
+
+
+
     public static String getFormatedTime(Calendar calendar, Boolean is24Hour, int withSeconds){
         String timeString=null;
 

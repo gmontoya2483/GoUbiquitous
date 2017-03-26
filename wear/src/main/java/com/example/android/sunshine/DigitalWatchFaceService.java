@@ -31,12 +31,25 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.support.wearable.watchface.WatchFaceStyle;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.WindowInsets;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.wearable.DataApi;
+import com.google.android.gms.wearable.DataEvent;
+import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
+import com.google.android.gms.wearable.DataMap;
+import com.google.android.gms.wearable.DataMapItem;
+import com.google.android.gms.wearable.Wearable;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -94,47 +107,46 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
     }
 
 
-    //TODO add the listener which consumes the notification sent by the phone
-    //implements DataApi.DataListener,  GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
-    //https://github.com/aashishvanand/WearWeather/blob/master/wearable/src/main/java/com/example/android/sunshine/app/WeatherFace.java
-    //https://github.com/aashishvanand/WearWeather
 
-    private class Engine extends CanvasWatchFaceService.Engine {
-        final Handler mUpdateTimeHandler = new EngineHandler(this);
+    private class Engine extends CanvasWatchFaceService.Engine  {
 
-        Calendar mCalendar;
-        Date mDate;
-        SimpleDateFormat mDayOfWeekFormat;
-        java.text.DateFormat mDateFormat;
+
+
+        private final Handler mUpdateTimeHandler = new EngineHandler(this);
+
+        private Calendar mCalendar;
+        private Date mDate;
+        private SimpleDateFormat mDayOfWeekFormat;
+        private java.text.DateFormat mDateFormat;
 
         //device features
-        boolean mAmbient;
-        boolean mRegisteredTimeZoneReceiver = false;
-        boolean mIsRound;
+        private boolean mAmbient;
+        private boolean mRegisteredTimeZoneReceiver = false;
+        private boolean mIsRound;
 
         //Graphic objects
-        Paint mBackgroundPaint;
-        /*
-        Paint mHourPaint;
-        Paint mColonPaint;
-        Paint mMinutePaint;
-        Paint mAmPmPaint;
-         */
-        Paint mDateTextPaint;
-        Paint mTimeTextPaint;
-        Paint mIconBitmappaint;
-        Paint mMaxTempTextPaint;
-        Paint mMinTempTextPaint;
+        private Paint mBackgroundPaint;
+
+        private Paint mDateTextPaint;
+        private Paint mTimeTextPaint;
+        private Paint mIconBitmappaint;
+        private Paint mMaxTempTextPaint;
+        private Paint mMinTempTextPaint;
+
+        private float mXOffset;
+        private float mYOffset;
+        private float mYIconYOffset;
+        private float mYTimeOffset;
+        private float mYDateOffset;
+        private float mYTempOffset;
+        private float mYLineOffset;
+        private float mXLineOffset;
 
 
-        float mXOffset;
-        float mYOffset;
-        float mYIconYOffset;
-        float mYTimeOffset;
-        float mYDateOffset;
-        float mYTempOffset;
-        float mYLineOffset;
-        float mXLineOffset;
+        private String mLowTemp;
+        private String mHighTemp;
+        private int mWeatherId;
+
 
         /**
          * Whether the display supports fewer bits for each color in ambient mode. When true, we
@@ -150,7 +162,6 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 invalidate();
             }
         };
-
 
 
         private void initializeWatchFaceElements(Resources resources){
@@ -178,15 +189,11 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mMaxTempTextPaint.setTypeface(NORMAL_TYPEFACE);
             mMaxTempTextPaint.setAntiAlias(true);
 
-
             mMinTempTextPaint= new Paint();
             mMinTempTextPaint.setColor(resources.getColor(R.color.digital_minT));
             mMinTempTextPaint.setTextSize(resources.getDimension(R.dimen.digital_text_MinT_size));
             mMinTempTextPaint.setTypeface(NORMAL_TYPEFACE);
             mMinTempTextPaint.setAntiAlias(true);
-
-
-
 
             mYOffset = resources.getDimension(R.dimen.digital_y_offset);
             mCalendar = Calendar.getInstance();
@@ -359,10 +366,9 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
             String time;
             String date;
-            String maxTemp;
-            String minTemp;
 
-            float xPos,yPos;
+
+
 
             // Draw the background.
             if (isInAmbientMode()) {
@@ -378,20 +384,32 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             boolean is24Hour = DateFormat.is24HourFormat(DigitalWatchFaceService.this);
 
 
-            //Draw the weather icon
-            if(!isInAmbientMode()) {
-                int icon = Utils.getIconResourceForWeatherCondition(300);
+            mHighTemp=WatchInterfaceService.getHighTemp(getApplicationContext());
+            mLowTemp=WatchInterfaceService.getLowTemp(getApplicationContext());
+            mWeatherId=WatchInterfaceService.getWeatherId(getApplicationContext());
 
-                Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
-                canvas.drawBitmap(weatherIcon,
-                        bounds.centerX()-(weatherIcon.getWidth()/2),
-                        mYOffset+mYIconYOffset,
-                        mIconBitmappaint);
+
+
+            //Check if we get a weather ID temp from the phone app before drawing
+            if(mWeatherId!=WatchInterfaceService.NOT_FOUND_WEATHER_ID){
+
+                //Draw the weather icon
+                if(!isInAmbientMode()) {
+                    int icon = Utils.getIconResourceForWeatherCondition(mWeatherId);
+
+                    Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
+                    canvas.drawBitmap(weatherIcon,
+                            bounds.centerX()-(weatherIcon.getWidth()/2),
+                            mYOffset+mYIconYOffset,
+                            mIconBitmappaint);
+
+                }
+
 
             }
 
 
-            //Draw the Time
+           //Draw the Time
             if (mAmbient){
                 time=Utils.getFormatedTime(mCalendar,is24Hour,Utils.TIME_WITHOUT_SECONDS);
             }else{
@@ -419,21 +437,23 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                     mDateTextPaint);
 
 
-            //Draw the  Max Temp
-            maxTemp=Utils.formatTemperature(getApplicationContext(),27);
-            canvas.drawText(maxTemp,
-                    bounds.centerX()-(mMaxTempTextPaint.measureText(maxTemp)),
-                    bounds.centerY()+ mYTempOffset,
-                    mMaxTempTextPaint);
 
-            //Draw the  Max Temp
-            minTemp=Utils.formatTemperature(getApplicationContext(),15);
-            canvas.drawText(minTemp,
-                    bounds.centerX(),
-                    bounds.centerY()+ mYTempOffset,
-                    mMinTempTextPaint);
+            //Check if we get a pair high/ Min temp from the phone app before drawing
+            if (!mHighTemp.equals(WatchInterfaceService.NOT_FOUND_HIGH_TEMP) && !mLowTemp.equals(WatchInterfaceService.NOT_FOUND_LOW_TEMP)){
 
+                //Draw the  Max Temp
+                canvas.drawText(mHighTemp,
+                        bounds.centerX()-(mMaxTempTextPaint.measureText(mHighTemp)),
+                        bounds.centerY()+ mYTempOffset,
+                        mMaxTempTextPaint);
 
+                //Draw the  Min Temp
+                canvas.drawText(mLowTemp,
+                        bounds.centerX(),
+                        bounds.centerY()+ mYTempOffset,
+                        mMinTempTextPaint);
+
+            }
 
         }
 
@@ -468,5 +488,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
             }
         }
+
+
+
     }
 }
