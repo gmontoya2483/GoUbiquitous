@@ -1,8 +1,6 @@
 package com.example.android.sunshine;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.util.Log;
 
 import com.example.android.sunshine.data.WeatherContract;
@@ -43,15 +40,15 @@ public class WatchInterface implements GoogleApiClient.ConnectionCallbacks,Googl
     public static final float DEFAULT_LOW_TEMP=999;
     public static final int DEFAULT_WEATHER_ID=999;
 
-    public static final String[] WEATHER_NOTIFICATION_PROJECTION = {
+    private static final String[] WEATHER_NOTIFICATION_PROJECTION = {
             WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
     };
 
-    public static final int INDEX_WEATHER_ID = 0;
-    public static final int INDEX_MAX_TEMP = 1;
-    public static final int INDEX_MIN_TEMP = 2;
+    private static final int INDEX_WEATHER_ID = 0;
+    private static final int INDEX_MAX_TEMP = 1;
+    private static final int INDEX_MIN_TEMP = 2;
 
 
     private GoogleApiClient mGoogleApiClient;

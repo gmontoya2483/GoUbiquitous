@@ -72,6 +72,7 @@ public class SunshineSyncTask {
                         null,
                         null);
 
+
                 /* Insert our new weather data into Sunshine's ContentProvider */
                 sunshineContentResolver.bulkInsert(
                         WeatherContract.WeatherEntry.CONTENT_URI,
