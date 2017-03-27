@@ -142,12 +142,12 @@ Sending weather information from the phone to the wearable
 
 *  Public Methods
 
-   -  boolean weatherHasChanged()
+   -  ```boolean weatherHasChanged()```  
+     
    Return **true** if the weather conditions have changed since last time they were informed to the wearable.  
-   Return **false** if the weather conditions have not changed since last time they were informed to the wearable.  
+   Return **false** if the weather conditions have not changed since last time they were informed to the wearable.    
    
-   
-   - boolean notifyWearable()
+   - ```boolean notifyWearable()```
    
    This method sends to the wearable the weather information. (i.e High and Low formatted temperatures and the weather condition ID.
    
