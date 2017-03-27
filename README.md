@@ -108,7 +108,7 @@ dependencies {
 Sending weather information from the phone to the wearable
 ----------------------------------------------------------
 
-* **WatchInterface** class
+* **WatchInterface** class (app module)
 
 ```java
     public class WatchInterface implements GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener {
@@ -151,7 +151,7 @@ Sending weather information from the phone to the wearable
    
    This method sends to the wearable the weather information. (i.e High and Low formatted temperatures and the weather condition ID.
    
-   Return **true** if the notification was sent. It doesn´t mean that the notification was received by the wearable.
+   Return **true** if the notification was sent. It doesn´t mean that the notification was received by the wearable.  
    Return **false** if the notification was not sent.
    
 *  How to use it:
@@ -178,7 +178,139 @@ Sending weather information from the phone to the wearable
     }
 ```
   
+
+Receiving weather information from the phone
+--------------------------------------------
+
+* **WatchInterService** class (wear module)  
+
+```java
+    public class WatchInterfaceService extends WearableListenerService {
+    
+    }
+```
+
+*  Public Constants  
+
+```java
+    public static final String NOTIFICATION_PATH="/wear_face";
+    public static final String HIGH_TEMP_KEY="high_temp";
+    public static final String LOW_TEMP_KEY="low_temp";
+    public static final String WEATHER_ID_KEY="weather_id";
+    
+    public static final String NOT_FOUND_HIGH_TEMP="ND";
+    public static final String NOT_FOUND_LOW_TEMP="ND";
+    public static final int NOT_FOUND_WEATHER_ID=999;
+```
+
    
+   
+*  Public Methods
+
+   -  ```static String getHighTemp(Context context)```  
+     
+        Return the last ***high temperature*** received.  
+        Return ```"ND"``` if the wearable hasn´t received any weather information yet.
+   
+   -  ```static String getLowTemp(Context context)```  
+        
+        Return the last ***Low temperature*** received.  
+        Return ```"ND"``` if the wearable hasn´t received any weather information yet.
+        
+   -  ```static String getWeatherId(Context context)```  
+             
+       Return the last ***Weather Id*** received.  
+       Return ```999``` if the wearable hasn´t received any weather information yet.
+       
+*  ```AndroidManifest.xlm``` (wearable)
+
+```xml
+<application>
+    <service
+       android:name=".WatchInterfaceService"
+       android:enabled="true"
+       android:exported="true">
+                <intent-filter>
+                    <action android:name="com.google.android.gms.wearable.MESSAGE_RECEIVED" />
+                    <data android:scheme="wear" android:host="*" android:path="/wear_face"/>
+                </intent-filter>
+    
+                <intent-filter>
+                    <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+    
+                    <data
+                        android:host="*"
+                        android:scheme="wear"
+                        />
+                </intent-filter>
+    
+    
+            </service>
+
+</application>
+```
+   
+
+*   How to use it:
+
+    - Within the **DigitalWatchFaceService** class -> **Engine** class
+
+```java
+    public void onDraw(Canvas canvas, Rect bounds) {
+        
+                        //
+                        //
+                        //
+        
+        mHighTemp=WatchInterfaceService.getHighTemp(getApplicationContext());
+        mLowTemp=WatchInterfaceService.getLowTemp(getApplicationContext());
+        mWeatherId=WatchInterfaceService.getWeatherId(getApplicationContext());
+        
+        
+        
+        //Check if we get a weather ID temp from the phone app before drawing
+        if(mWeatherId!=WatchInterfaceService.NOT_FOUND_WEATHER_ID){
+            //Draw the weather icon
+            if(!isInAmbientMode()) {
+                int icon = Utils.getIconResourceForWeatherCondition(mWeatherId);
+                Bitmap weatherIcon = BitmapFactory.decodeResource(getResources(), icon);
+                canvas.drawBitmap(weatherIcon,
+                bounds.centerX()-(weatherIcon.getWidth()/2),
+                mYOffset+mYIconYOffset,
+                mIconBitmappaint);
+        
+            }
+        }
+        
+        
+                        //
+                        //
+                        //
+      
+        
+        //Check if we get a pair high/ Min temp from the phone app before drawing
+        if (!mHighTemp.equals(WatchInterfaceService.NOT_FOUND_HIGH_TEMP) && !mLowTemp.equals(WatchInterfaceService.NOT_FOUND_LOW_TEMP)){
+            //Draw the  Max Temp
+            canvas.drawText(mHighTemp,
+                bounds.centerX()-(mMaxTempTextPaint.measureText(mHighTemp)),
+                bounds.centerY()+ mYTempOffset,
+                mMaxTempTextPaint);
+            
+             //Draw the  Min Temp
+             canvas.drawText(mLowTemp,
+                bounds.centerX(),
+                bounds.centerY()+ mYTempOffset,
+                mMinTempTextPaint);
+        }
+        
+                        //
+                        //
+                        //
+        
+    }
+```
+     
+     
 ## Using the Emulator
 
 *  Install the "Android wear" application in your phone.

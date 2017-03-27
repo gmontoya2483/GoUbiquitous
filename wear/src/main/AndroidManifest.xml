@@ -36,15 +36,7 @@
                 <category android:name="com.google.android.wearable.watchface.category.WATCH_FACE" />
             </intent-filter>
 
-            <!-- This intent filter is to receive modifications from the phone
-            <intent-filter>
-                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
 
-                <data
-                    android:host="*"
-                    android:scheme="wear" />
-            </intent-filter>
-            -->
         </service>
 
         <meta-data
