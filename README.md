@@ -57,10 +57,34 @@ Through this project, I Will:
 ## Implementation
 
 
+Adding the wear application to the Project
+------------------------------------------
+
+1 - Right click on the project: **New -> Module**
+
+<img src="screenshots/adding_w_new_module.png" height="300" alt="New Module"/>
+
+2 - Select **Android Wear Module** and click on **Next**
+
+<img src="screenshots/adding_w_new_android_wear_module.png" height="300" alt="New wear Module"/>
+
+3 - Enter the Application and the module names and click on **Next**. Ensure the package is the same uses by the Phone Application.
+
+4 - Select **Watch Face** and click on **Next**
+
+<img src="screenshots/adding_w_watchface.png" height="300" alt="Watch face"/>
+
+5 - Enter the service name and and select **Digital** as Style 
+
+<img src="screenshots/adding_w_new_digital.png" height="300" alt="Watch face"/>
+
+
+
+
 Linking the Phone application with the Wear application
 -------------------------------------------------------
 
-1 - Creates a new wearable module: New -> Module.  
+1 - Softaware package. 
     Provide the new module the same package as the application.  
 
 ```java
@@ -82,6 +106,17 @@ dependencies {
 ```xml
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 ``` 
+
+
+
+
+
+### Sending weather information from the phone to the wearable
+
+
+
+
+
  
 ## Using the Emulator
 
