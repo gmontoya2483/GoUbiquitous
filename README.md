@@ -79,8 +79,6 @@ Adding the wear application to the Project
 <img src="screenshots/adding_w_new_digital.png" height="300" alt="Watch face"/>
 
 
-
-
 Linking the Phone application with the Wear application
 -------------------------------------------------------
 
